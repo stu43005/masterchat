@@ -149,6 +149,14 @@ export function parseAddBannerToLiveChatCommand(
       isVerified,
     };
     return payload;
+  } else if ("liveChatCallForQuestionsRenderer" in contents) {
+    debugLog(
+      "[TODO, action required] implement liveChatCallForQuestionsRenderer in parseAddBannerToLiveChatCommand"
+    );
+    /*
+     [action required] Unrecognized content type found in parseAddBannerToLiveChatCommand: {"bannerRenderer":{"liveChatBannerRenderer":{"contents":{"liveChatCallForQuestionsRenderer":{"creatorAvatar":{"thumbnails":[{"url":"https://yt4.ggpht.com/hI-shJC2UnZcXRsZjKAPHXfEabW3KpiyeTtHTu1lkDvuwyJHYX4daHJ1g7nMW75Y-D36ba7EB3o=s32-c-k-c0x00ffffff-no-rj","width":32,"height":32},{"url":"https://yt4.ggpht.com/hI-shJC2UnZcXRsZjKAPHXfEabW3KpiyeTtHTu1lkDvuwyJHYX4daHJ1g7nMW75Y-D36ba7EB3o=s64-c-k-c0x00ffffff-no-rj","width":64,"height":64}]},"featureLabel":{"simpleText":"Q&A"},"contentSeparator":{"simpleText":"·"},"overflowMenuButton":{"buttonRenderer":{"icon":{"iconType":"MORE_VERT"},"accessibility":{"label":"Chat actions"},"trackingParams":"CAcQ8FsiEwiqrZ3ytIn8AhXBDX0KHZ3kALE=","accessibilityData":{"accessibilityData":{"label":"Chat actions"}},"command":{"clickTrackingParams":"CAcQ8FsiEwiqrZ3ytIn8AhXBDX0KHZ3kALE=","commandMetadata":{"webCommandMetadata":{"ignoreNavigation":true}},"liveChatItemContextMenuEndpoint":{"params":"Q2g0S0hBb2FRMGt0YlRGUE5qQnBabmREUmxkWlNISlJXV1EwT0ZGSVRXY2FLU29uQ2hoVlEyYzNjMWN0YURGUVZXOTNaR2xTTlVzMFNHeENaWGNTQzNsRmVVbGxMVXBPWkVkM0lBRW9BVElhQ2hoVlEyYzNjMWN0YURGUVZXOTNaR2xTTlVzMFNHeENaWGM0QVVnQVVCNCUzRA=="}}}},"creatorAuthorName":{"simpleText":"Lia Ch. 鈴香アシェリア 【Phase Connect】"},"questionMessage":{"runs":[{"text":"ASK"}]}}},"actionId":"ChwKGkNJLW0xTzYwaWZ3Q0ZXWUhyUVlkNDhRSE1n","viewerIsCreator":false,"targetId":"live-chat-banner","onCollapseCommand":{"clickTrackingParams":"CAEQl98BIhMIqq2d8rSJ_AIVwQ19Ch2d5ACx","elementsCommand":{"setEntityCommand":{"identifier":"EihDaHdLR2tOSkxXMHhUell3YVdaM1EwWlhXVWh5VVZsa05EaFJTRTFuIIsBKAE%3D","entity":"CkJFaWhEYUhkTFIydE9Ta3hYTUhoVWVsbDNZVmRhTTFFd1dsaFhWV2g1VlZac2EwNUVhRkpUUlRGdUlJc0JLQUUlM0QQAQ=="}}},"onExpandCommand":{"clickTrackingParams":"CAEQl98BIhMIqq2d8rSJ_AIVwQ19Ch2d5ACx","elementsCommand":{"setEntityCommand":{"identifier":"EihDaHdLR2tOSkxXMHhUell3YVdaM1EwWlhXVWh5VVZsa05EaFJTRTFuIIsBKAE%3D","entity":"CkJFaWhEYUhkTFIydE9Ta3hYTUhoVWVsbDNZVmRhTTFFd1dsaFhWV2g1VlZac2EwNUVhRkpUUlRGdUlJc0JLQUUlM0QQAA=="}}},"isStackable":true}}}
+    */
+    return unknown(payload);
   } else {
     debugLog(
       `[action required] Unrecognized content type found in parseAddBannerToLiveChatCommand: ${JSON.stringify(

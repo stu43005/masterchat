@@ -487,7 +487,7 @@ export function parseLiveChatSponsorshipsGiftPurchaseAnnouncementRenderer(
   }
 
   const membership = parseMembership(
-    header.authorBadges[header.authorBadges.length - 1]
+    header.authorBadges?.[header.authorBadges?.length - 1]
   )!;
 
   if (!membership) {

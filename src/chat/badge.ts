@@ -5,9 +5,10 @@ import {
 } from "../interfaces/yt/chat";
 import { Membership } from "../interfaces/misc";
 
-export function parseMembership(badge: YTAuthorBadge): Membership | undefined {
-  const renderer = badge.liveChatAuthorBadgeRenderer;
-  if (!renderer.customThumbnail) return;
+export function parseMembership(badge?: YTAuthorBadge): Membership | undefined {
+  if (!badge) return;
+  const renderer = badge?.liveChatAuthorBadgeRenderer;
+  if (!renderer?.customThumbnail) return;
 
   const match = /^(.+?)(?:\s\((.+)\))?$/.exec(renderer.tooltip);
   if (match) {

@@ -663,7 +663,7 @@ export interface YTLiveChatSponsorshipsHeaderRenderer {
       { text: " memberships"; bold: true }
     ];
   };
-  authorBadges: YTLiveChatAuthorBadgeRendererContainer[];
+  authorBadges?: YTLiveChatAuthorBadgeRendererContainer[];
   contextMenuEndpoint: YTLiveChatItemContextMenuEndpointContainer;
   contextMenuAccessibility: YTAccessibilityData;
   image: YTThumbnailList; // https://www.gstatic.com/youtube/img/sponsorships/sponsorships_gift_purchase_announcement_artwork.png
