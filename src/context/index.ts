@@ -1,3 +1,4 @@
+import * as cheerio from "cheerio";
 import {
   MembersOnlyError,
   NoPermissionError,
@@ -107,7 +108,7 @@ export function parseMetadataFromWatch(html: string) {
   const initialData = findInitialData(html)!;
 
   const playabilityStatus = findPlayabilityStatus(html);
-  assertPlayability(playabilityStatus);
+  // assertPlayability(playabilityStatus);
 
   // TODO: initialData.contents.twoColumnWatchNextResults.conversationBar.conversationBarRenderer.availabilityMessage.messageRenderer.text.runs[0].text === 'Chat is disabled for this live stream.'
   const results =
@@ -120,7 +121,8 @@ export function parseMetadataFromWatch(html: string) {
   const title = runsToString(primaryInfo.title.runs);
   const channelId = videoOwner.navigationEndpoint.browseEndpoint.browseId;
   const channelName = runsToString(videoOwner.title.runs);
-  const isLive = primaryInfo.viewCount!.videoViewCountRenderer.isLive ?? false;
+  const metadata = parseVideoMetadataFromHtml(html);
+  const isLive = !metadata?.publication?.endDate ?? false;
 
   return {
     title,
@@ -128,4 +130,56 @@ export function parseMetadataFromWatch(html: string) {
     channelName,
     isLive,
   };
+}
+
+/**
+ * @see http://schema.org/VideoObject
+ */
+function parseVideoMetadataFromHtml(html: string) {
+  const $ = cheerio.load(html);
+  const meta = parseVideoMetadataFromElement(
+    $("[itemtype=http://schema.org/VideoObject]")?.[0]
+  );
+  return meta;
+}
+
+function parseVideoMetadataFromElement(
+  root: any,
+  meta: Record<string, any> = {}
+) {
+  root?.children?.forEach((child: cheerio.Element) => {
+    const attributes = child?.attribs;
+    const key = attributes?.itemprop;
+    if (!key) {
+      return;
+    }
+
+    if (child.children.length) {
+      meta[key] = parseVideoMetadataFromElement(child);
+      return;
+    }
+
+    const value = parseVideoMetaValueByKey(
+      key,
+      attributes?.href || attributes?.content
+    );
+    meta[key] = value;
+  });
+
+  return meta;
+}
+
+function parseVideoMetaValueByKey(key: string, value: string) {
+  switch (key) {
+    case "paid":
+    case "unlisted":
+    case "isFamilyFriendly":
+    case "interactionCount":
+    case "isLiveBroadcast":
+      return /true/i.test(value);
+    case "width":
+    case "height":
+      return Number(value);
+  }
+  return value;
 }
