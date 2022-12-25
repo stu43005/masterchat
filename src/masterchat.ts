@@ -436,12 +436,12 @@ export class Masterchat extends EventEmitter {
 
   public async fetchMetadataFromWatch(id: string) {
     try {
-      const html = await this.get<string>("/watch?v=" + this.videoId);
+      const html = await this.get<string>("/watch?v=" + id);
       return parseMetadataFromWatch(html);
     } catch (err) {
       // Check ban status
       if ((err as AxiosError).code === "429") {
-        throw new AccessDeniedError("Rate limit exceeded: " + this.videoId);
+        throw new AccessDeniedError("Rate limit exceeded: " + id);
       }
       throw err;
     }
