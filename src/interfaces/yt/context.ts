@@ -465,8 +465,18 @@ export interface VideoActionsMenuRenderer {
 }
 
 export interface TopLevelButton {
+  segmentedLikeDislikeButtonRenderer?: SegmentedLikeDislikeButtonRenderer;
   toggleButtonRenderer?: TopLevelButtonToggleButtonRenderer;
   buttonRenderer?: TopLevelButtonButtonRenderer;
+}
+
+export interface SegmentedLikeDislikeButtonRenderer {
+  likeButton: YTLikeButton;
+  dislikeButton: YTLikeButton;
+}
+
+export interface YTLikeButton {
+  toggleButtonRenderer: TopLevelButtonToggleButtonRenderer;
 }
 
 export interface TopLevelButtonButtonRenderer {

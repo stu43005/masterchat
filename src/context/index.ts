@@ -128,9 +128,15 @@ export function parseMetadataFromWatch(html: string) {
         stringify(primaryInfo.viewCount?.videoViewCountRenderer.viewCount)
           .replace("watching now", "")
           .trim()
-          .replace(/,/g, "")
+          .replace(/[^\d]+/g, "")
       )
     : 0;
+  const likes = primaryInfo.videoActions.menuRenderer.topLevelButtons
+    .find((b) => "segmentedLikeDislikeButtonRenderer" in b)
+    ?.segmentedLikeDislikeButtonRenderer?.likeButton.toggleButtonRenderer.defaultText.accessibility?.accessibilityData.label.replace(
+      /[^\d]+/g,
+      ""
+    );
 
   return {
     title,
@@ -138,6 +144,7 @@ export function parseMetadataFromWatch(html: string) {
     channelName,
     isLive,
     viewCount,
+    likes: likes ? Number(likes) : 0,
   };
 }
 
