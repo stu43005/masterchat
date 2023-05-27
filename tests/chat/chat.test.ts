@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupRecorder } from "nock-record";
-import { describe, expect, it, beforeAll, vitest } from "vitest";
+import { beforeAll, describe, expect, it, vitest } from "vitest";
 import { Masterchat } from "../../src";
 
 const mode = (process.env.NOCK_BACK_MODE as any) || "lockdown";
@@ -8,7 +8,12 @@ const record = setupRecorder({ mode });
 
 async function fetchUpcomingStreams() {
   const data = await axios.get(
-    "https://holodex.net/api/v2/live?status=live&org=Hololive"
+    "https://holodex.net/api/v2/live?status=live&org=Hololive",
+    {
+      headers: {
+        "X-APIKEY": process.env.HOLODEX_APIKEY || "",
+      },
+    }
   );
   return data.data;
 }

@@ -1134,7 +1134,57 @@ export interface ContinuationCommand {
   request: string;
 }
 
-export interface FrameworkUpdates {}
+export interface FrameworkUpdates {
+  entityBatchUpdate: EntityBatchUpdate;
+}
+
+export interface EntityBatchUpdate {
+  mutations: EntityMutation[];
+  timestamp: UpdateTimestamp;
+}
+
+export interface UpdateTimestamp {
+  seconds: string;
+  nanos: number;
+}
+
+export interface EntityMutation {
+  entityKey: string;
+  type: string;
+  payload: EntityMutationPayload;
+}
+
+export interface EntityMutationPayload {
+  emojiFountainDataEntity?: EmojiFountainDataEntity;
+  booleanEntity?: BooleanEntity;
+}
+
+export interface EmojiFountainDataEntity {
+  key: string;
+  reactionBuckets: ReactionBucket[];
+  updateTimeUsec: string;
+}
+
+export interface ReactionBucket {
+  reactions?: Reaction[];
+  totalReactions: number;
+  duration: BucketDuration;
+  intensityScore?: number;
+}
+
+export interface Reaction {
+  key: string;
+  value: number;
+}
+
+export interface BucketDuration {
+  seconds: string;
+}
+
+export interface BooleanEntity {
+  key: string;
+  value: boolean;
+}
 
 export interface OnResponseReceivedEndpoint {
   clickTrackingParams: string;

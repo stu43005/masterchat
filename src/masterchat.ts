@@ -780,6 +780,11 @@ export class Masterchat extends EventEmitter {
 
       const { continuationContents } = payload;
 
+      const emojiFountainData =
+        payload.frameworkUpdates?.entityBatchUpdate.mutations
+          .map((mutation) => mutation.payload.emojiFountainDataEntity)
+          .find(Boolean);
+
       if (!continuationContents) {
         /** there's several possibilities lied here:
          * 1. live chat is over (primary)
@@ -819,6 +824,7 @@ export class Masterchat extends EventEmitter {
         return {
           actions: [],
           continuation: undefined,
+          emojiFountainData: emojiFountainData,
           error: null,
         };
       }
@@ -832,6 +838,7 @@ export class Masterchat extends EventEmitter {
         return {
           actions: [],
           continuation: newContinuation,
+          emojiFountainData: emojiFountainData,
           error: null,
         };
       }
@@ -855,6 +862,7 @@ export class Masterchat extends EventEmitter {
       const chat: ChatResponse = {
         actions,
         continuation: newContinuation,
+        emojiFountainData: emojiFountainData,
         error: null,
       };
 

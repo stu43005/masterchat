@@ -4,6 +4,7 @@ import {
   YTReloadContinuation,
   YTResponseContext,
   YTBrowseEndpointContainer,
+  FrameworkUpdates,
 } from "./context";
 
 // --------------------
@@ -92,6 +93,7 @@ export interface YTChatResponse {
   continuationContents?: YTContinuationContents;
   error?: YTChatError;
   trackingParams: string;
+  frameworkUpdates?: FrameworkUpdates;
 }
 
 export interface YTGetItemContextMenuResponse {
