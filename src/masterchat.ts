@@ -42,10 +42,10 @@ import {
 } from "./interfaces/yt/chat";
 import { GetTranscriptResponse } from "./interfaces/yt/transcript";
 import {
+  CscOptions,
   addModeratorParams,
   b64tou8,
   csc,
-  CscOptions,
   getTranscriptParams,
   hideParams,
   liveReloadContinuation,
@@ -848,16 +848,7 @@ export class Masterchat extends EventEmitter {
         rawActions = unwrapReplayActions(rawActions);
       }
 
-      const actions = rawActions
-        .map((action) => {
-          try {
-            return parseAction(action);
-          } catch (error: any) {
-            this.log("parseAction", error.message, { action });
-            return null;
-          }
-        })
-        .filter((a): a is Action => !!a);
+      const actions = rawActions.map(parseAction).filter(Boolean);
 
       const chat: ChatResponse = {
         actions,
