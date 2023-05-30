@@ -46,7 +46,8 @@ export type Action =
   | MembershipGiftPurchaseAction
   | MembershipGiftRedemptionAction
   | ModerationMessageAction
-  | RemoveChatItemAction;
+  | RemoveChatItemAction
+  | RemoveChatItemByAuthorAction;
 
 export interface AddChatItemAction {
   type: "addChatItemAction";
@@ -432,6 +433,12 @@ export interface ModerationMessageAction {
 export interface RemoveChatItemAction {
   type: "removeChatItemAction";
   targetId: string;
+  timestamp: Date;
+}
+
+export interface RemoveChatItemByAuthorAction {
+  type: "removeChatItemByAuthorAction";
+  channelId: string;
   timestamp: Date;
 }
 
