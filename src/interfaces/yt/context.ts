@@ -738,7 +738,7 @@ export interface VideoOwnerRenderer {
   thumbnail: Background;
   title: Byline;
   navigationEndpoint: VideoOwnerRendererNavigationEndpoint;
-  subscriberCountText: YTRunContainer;
+  subscriberCountText: YTText;
   trackingParams: string;
   badges: MetadataBadgeRendererContainer[];
   membershipButton: MembershipButton;

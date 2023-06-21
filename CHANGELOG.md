@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.1
+
+- Add `subscribers` to `fetchMetadataFromWatch` method
+
 ## v1.2.0
 
 - New action `RemoveChatItemByAuthorAction`

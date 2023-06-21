@@ -5,8 +5,9 @@ import {
   NoStreamRecordingError,
   UnavailableError,
 } from "../errors";
-import { runsToString, stringify } from "../utils";
 import { YTInitialData, YTPlayabilityStatus } from "../interfaces/yt/context";
+import { runsToString, stringify } from "../utils";
+import { unitsToNumber } from "../chat/utils";
 
 // OK duration=">0" => Archived (replay chat may be available)
 // OK duration="0" => Live (chat may be available)
@@ -137,6 +138,9 @@ export function parseMetadataFromWatch(html: string) {
       /[^\d]+/g,
       ""
     );
+  const subscribers = unitsToNumber(
+    stringify(videoOwner.subscriberCountText).replace("subscribers", "").trim()
+  );
 
   return {
     title,
@@ -145,6 +149,7 @@ export function parseMetadataFromWatch(html: string) {
     isLive,
     viewCount,
     likes: likes ? Number(likes) : 0,
+    subscribers,
   };
 }
 

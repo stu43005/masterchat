@@ -9,7 +9,7 @@ const record = setupRecorder({
 it(
   "metadata",
   async () => {
-    expect.assertions(3);
+    expect.assertions(4);
 
     const videoId = "dc9IBmKoDm8";
 
@@ -22,6 +22,7 @@ it(
     );
     expect(metadata.viewCount).toBe(13712);
     expect(metadata.likes).toBe(6685);
+    expect(metadata.subscribers).toBe(1630000);
 
     completeRecording();
   },
