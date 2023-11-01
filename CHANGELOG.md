@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.2
+
+- Fix some TypeErrors.
+
 ## v1.2.1
 
 - Add `subscribers` to `fetchMetadataFromWatch` method
