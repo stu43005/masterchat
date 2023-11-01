@@ -336,11 +336,8 @@ export function parseLiveChatViewerEngagementMessageRenderer(
    * POLL: poll result message
    */
 
-  const {
-    id,
-    timestampUsec,
-    icon: { iconType },
-  } = renderer;
+  const { id, timestampUsec, icon } = renderer;
+  const { iconType } = icon ?? {};
   if ("simpleText" in renderer.message) {
     debugLog(
       "[action required] message is simpleText (engagement):",

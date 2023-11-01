@@ -782,7 +782,7 @@ export class Masterchat extends EventEmitter {
 
       const emojiFountainData =
         payload.frameworkUpdates?.entityBatchUpdate.mutations
-          .map((mutation) => mutation.payload.emojiFountainDataEntity)
+          .map((mutation) => mutation.payload?.emojiFountainDataEntity)
           .find(Boolean);
 
       if (!continuationContents) {

@@ -494,10 +494,11 @@ export interface YTLiveChatBannerRenderer {
 export interface YTLiveChatViewerEngagementMessageRenderer {
   id: string;
   timestampUsec?: string;
-  icon: YTIcon;
+  icon?: YTIcon;
   message: YTText;
   actionButton?: YTActionButtonRendererContainer;
   contextMenuEndpoint?: YTLiveChatItemContextMenuEndpointContainer;
+  trackingParams?: string;
 }
 
 export interface YTTooltipRenderer {

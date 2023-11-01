@@ -134,7 +134,7 @@ export function parseMetadataFromWatch(html: string) {
     : 0;
   const likes = primaryInfo.videoActions.menuRenderer.topLevelButtons
     .find((b) => "segmentedLikeDislikeButtonRenderer" in b)
-    ?.segmentedLikeDislikeButtonRenderer?.likeButton.toggleButtonRenderer.defaultText.accessibility?.accessibilityData.label.replace(
+    ?.segmentedLikeDislikeButtonRenderer?.likeButton.toggleButtonRenderer?.defaultText.accessibility?.accessibilityData.label.replace(
       /[^\d]+/g,
       ""
     );
