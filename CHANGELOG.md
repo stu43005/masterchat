@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.0
+
+- Add `signal` param to `iterate` method
+
 ## v1.2.2
 
 - Fix some TypeErrors.
