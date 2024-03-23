@@ -87,6 +87,8 @@ export interface IterateChatOptions extends FetchChatOptions {
 export interface FetchChatOptions {
   /** fetch top chat instead of all chat */
   topChat?: boolean;
+
+  signal?: AbortSignal;
 }
 
 export type ChatListener = Promise<void>;
@@ -158,7 +160,7 @@ export class Masterchat extends EventEmitter {
   private async postWithRetry<T>(
     input: string,
     body: any,
-    options?: RetryOptions
+    options: RetryOptions & AxiosRequestConfig = {}
   ): Promise<T> {
     // this.log("postWithRetry", input);
     const errors = [];
@@ -168,7 +170,7 @@ export class Masterchat extends EventEmitter {
 
     while (true) {
       try {
-        return await this.post<T>(input, body);
+        return await this.post<T>(input, body, options);
       } catch (err) {
         if (err instanceof Error) {
           if (err.message === "canceled") throw new AbortError();
@@ -203,7 +205,6 @@ export class Masterchat extends EventEmitter {
     const res = await this.axiosInstance.request<T>({
       ...config,
       url: input,
-      signal: this.listenerAbortion.signal,
       method: "POST",
       headers: {
         ...config.headers,
@@ -228,7 +229,6 @@ export class Masterchat extends EventEmitter {
     const res = await this.axiosInstance.request<T>({
       ...config,
       url: input,
-      signal: this.listenerAbortion.signal,
       headers: {
         ...config.headers,
         ...(this.credentials && buildAuthHeaders(this.credentials)),
@@ -434,7 +434,7 @@ export class Masterchat extends EventEmitter {
     this.isLive ??= metadata.isLive;
   }
 
-  public async fetchMetadataFromWatch(id: string) {
+  public async fetchMetadataFromWatch(id: string = this.videoId) {
     try {
       const html = await this.get<string>("/watch?v=" + id);
       return parseMetadataFromWatch(html);
@@ -447,7 +447,7 @@ export class Masterchat extends EventEmitter {
     }
   }
 
-  public async fetchMetadataFromEmbed(id: string) {
+  public async fetchMetadataFromEmbed(id: string = this.videoId) {
     try {
       const html = await this.get<string>(`/embed/${id}`);
       return parseMetadataFromEmbed(html);
@@ -484,7 +484,7 @@ export class Masterchat extends EventEmitter {
    * (EventEmitter API)
    * start listening live stream
    */
-  public listen(iterateOptions?: IterateChatOptions) {
+  public listen(iterateOptions?: Omit<IterateChatOptions, "signal">) {
     if (this.listener) return this.listener;
 
     this.listenerAbortion = new AbortController();
@@ -518,7 +518,10 @@ export class Masterchat extends EventEmitter {
     };
 
     this.listener = makePromise({
-      iterateOptions,
+      iterateOptions: {
+        ...iterateOptions,
+        signal: this.listenerAbortion.signal,
+      },
     })
       .then(() => {
         // live chat closed by streamer
@@ -590,10 +593,9 @@ export class Masterchat extends EventEmitter {
     topChat = false,
     ignoreFirstResponse = false,
     continuation,
+    signal,
   }: IterateChatOptions = {}): AsyncGenerator<ChatResponse> {
-    const signal = this.listenerAbortion.signal;
-
-    if (signal.aborted) {
+    if (signal?.aborted) {
       throw new AbortError();
     }
 
@@ -603,7 +605,9 @@ export class Masterchat extends EventEmitter {
 
     // continuously fetch chat fragments
     while (true) {
-      const res = await this.fetch(token);
+      const res = await this.fetch(token, {
+        signal,
+      });
       const startMs = Date.now();
 
       // handle chats
@@ -655,6 +659,10 @@ export class Masterchat extends EventEmitter {
     let requestBody;
     let payload: YTChatResponse;
 
+    if (options.signal?.aborted) {
+      throw new AbortError();
+    }
+
     function applyNewLiveStatus(isLive: boolean) {
       requestUrl = isLive ? Constants.EP_GLC : Constants.EP_GLCR;
 
@@ -674,7 +682,9 @@ export class Masterchat extends EventEmitter {
 
     loop: while (true) {
       try {
-        payload = await this.post<YTChatResponse>(requestUrl, requestBody);
+        payload = await this.post<YTChatResponse>(requestUrl, requestBody, {
+          signal: options.signal,
+        });
       } catch (err) {
         // handle user cancallation
         if ((err as any)?.message === "canceled") {
