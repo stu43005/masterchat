@@ -18,7 +18,7 @@ export function parseUpdateLiveChatPollAction(
   const meta = header.metadataText.runs;
   const authorName = meta[0].text;
   const elapsedText = meta[2].text;
-  const voteCount = parseInt(meta[4].text, 10);
+  const voteCount = parseInt(meta[4].text.replace(/,/g, ""), 10);
 
   const parsed: UpdatePollAction = {
     type: "updatePollAction",
