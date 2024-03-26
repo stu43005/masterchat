@@ -105,7 +105,15 @@ export async function parseMetadataFromEmbed(html: string) {
   };
 }
 
-export function parseMetadataFromWatch(html: string) {
+export function parseMetadataFromWatch(html: string): {
+  title?: string;
+  channelId: string;
+  channelName?: string;
+  isLive?: boolean;
+  viewCount?: number;
+  likes?: number;
+  subscribers?: number;
+} {
   const initialData = findInitialData(html)!;
 
   const playabilityStatus = findPlayabilityStatus(html);
@@ -115,12 +123,18 @@ export function parseMetadataFromWatch(html: string) {
   const results =
     initialData.contents?.twoColumnWatchNextResults?.results.results!;
 
-  const primaryInfo = results.contents[0].videoPrimaryInfoRenderer;
-  const videoOwner =
-    results.contents[1].videoSecondaryInfoRenderer.owner.videoOwnerRenderer;
+  const primaryInfo = results.contents?.find(
+    (b) => "videoPrimaryInfoRenderer" in b
+  )?.videoPrimaryInfoRenderer;
+  const videoOwner = results.contents?.find(
+    (b) => "videoSecondaryInfoRenderer" in b
+  )?.videoSecondaryInfoRenderer.owner.videoOwnerRenderer;
+
+  const channelId = videoOwner?.navigationEndpoint.browseEndpoint.browseId!;
+
+  if (!primaryInfo || !videoOwner) return { channelId };
 
   const title = runsToString(primaryInfo.title.runs);
-  const channelId = videoOwner.navigationEndpoint.browseEndpoint.browseId;
   const channelName = runsToString(videoOwner.title.runs);
   const metadata = parseVideoMetadataFromHtml(html);
   const isLive = !metadata?.publication?.endDate ?? false;
