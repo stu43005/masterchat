@@ -16,6 +16,7 @@ export const SUPERCHAT_COLOR_MAP = {
   "4278237396": "lightblue",
   "4278239141": "green",
   "4294947584": "yellow",
+  "4294953512": "yellow",
   "4293284096": "orange",
   "4290910299": "magenta",
   "4291821568": "red",
