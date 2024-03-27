@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.4.1
+
+- Fix the missing badge information.
+  - `MembershipGiftRedemptionAction`
+
 ## v1.4.0
 
 - Fix SuperChat color mapping.
