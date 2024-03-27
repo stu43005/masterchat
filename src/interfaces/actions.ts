@@ -375,7 +375,7 @@ export type MembershipGiftPurchaseTickerContent = Omit<
   "timestamp" | "timestampUsec" | "type"
 >;
 
-export interface MembershipGiftRedemptionAction {
+export interface MembershipGiftRedemptionAction extends Badges {
   type: "membershipGiftRedemptionAction";
   id: string;
   timestamp: Date;

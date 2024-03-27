@@ -693,6 +693,7 @@ export interface YTLiveChatSponsorshipsGiftRedemptionAnnouncementRenderer {
       { text: string; bold: true; italics: true } // text: "User"
     ];
   };
+  authorBadges?: YTLiveChatAuthorBadgeRendererContainer[];
   contextMenuEndpoint: YTLiveChatItemContextMenuEndpointContainer;
   contextMenuAccessibility: YTAccessibilityData;
   trackingParams: string;

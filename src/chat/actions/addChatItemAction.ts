@@ -508,6 +508,7 @@ export function parseLiveChatSponsorshipsGiftRedemptionAnnouncementRenderer(
   const authorName = stringify(renderer.authorName);
   const authorPhoto = pickThumbUrl(renderer.authorPhoto);
   const senderName = renderer.message.runs[1].text;
+  const badges = parseBadges(renderer);
 
   if (!authorName) {
     debugLog(
@@ -525,6 +526,7 @@ export function parseLiveChatSponsorshipsGiftRedemptionAnnouncementRenderer(
     authorName,
     authorChannelId,
     authorPhoto,
+    ...badges,
   };
   return parsed;
 }
