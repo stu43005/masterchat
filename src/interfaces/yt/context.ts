@@ -466,8 +466,145 @@ export interface VideoActionsMenuRenderer {
 
 export interface TopLevelButton {
   segmentedLikeDislikeButtonRenderer?: SegmentedLikeDislikeButtonRenderer;
+  segmentedLikeDislikeButtonViewModel?: SegmentedLikeDislikeButtonViewModel;
   toggleButtonRenderer?: TopLevelButtonToggleButtonRenderer;
   buttonRenderer?: TopLevelButtonButtonRenderer;
+}
+
+export interface SegmentedLikeDislikeButtonViewModel {
+  likeButtonViewModel: LikeButtonViewModelContainer;
+  dislikeButtonViewModel: DislikeButtonViewModelContainer;
+  iconType: string;
+  likeCountEntity: LikeCountEntity;
+  dynamicLikeCountUpdateData: DynamicLikeCountUpdateData;
+}
+
+export interface LikeButtonViewModelContainer {
+  likeButtonViewModel: LikeButtonViewModel;
+}
+
+export interface LikeButtonViewModel {
+  toggleButtonViewModel: ToggleButtonViewModelContainer;
+  likeStatusEntityKey: string;
+  likeStatusEntity: LikeStatusEntity;
+}
+
+export interface DislikeButtonViewModelContainer {
+  dislikeButtonViewModel: DislikeButtonViewModel;
+}
+
+export interface DislikeButtonViewModel {
+  toggleButtonViewModel: ToggleButtonViewModelContainer;
+  dislikeEntityKey: string;
+}
+
+export interface ToggleButtonViewModelContainer {
+  toggleButtonViewModel: ToggleButtonViewModel;
+}
+
+export interface ToggleButtonViewModel {
+  defaultButtonViewModel: ButtonViewModelContainer;
+  toggledButtonViewModel: ButtonViewModelContainer;
+  identifier?: string;
+  trackingParams: string;
+  isTogglingDisabled: boolean;
+}
+
+export interface ButtonViewModelContainer {
+  buttonViewModel: ButtonViewModel;
+}
+
+export interface ButtonViewModel {
+  iconName: string;
+  title: string;
+  onTap: ButtonViewModelOnTap;
+  accessibilityText: string;
+  style: string;
+  trackingParams: string;
+  isFullWidth: boolean;
+  type: string;
+  buttonSize: string;
+  accessibilityId: string;
+  tooltip: string;
+}
+
+export interface ButtonViewModelOnTap {
+  serialCommand: SerialCommands;
+}
+
+export interface SerialCommands {
+  commands: SerialCommand[];
+}
+
+export interface SerialCommand {
+  logGestureCommand?: LogGestureCommand;
+  innertubeCommand?: InnertubeCommand;
+}
+
+export interface LogGestureCommand {
+  gestureType: string;
+  trackingParams: string;
+}
+
+export interface InnertubeCommand {
+  clickTrackingParams: string;
+  commandMetadata: InnertubeCommandMetadata;
+  likeEndpoint?: LikeEndpoint;
+}
+
+export interface InnertubeCommandMetadata {
+  webCommandMetadata: InnertubeWebCommandMetadata;
+}
+
+export interface InnertubeWebCommandMetadata {
+  sendPost: boolean;
+  apiUrl: string;
+}
+
+export interface LikeEndpoint {
+  status: string;
+  target: LikeEndpointTarget;
+  likeParams?: string;
+  dislikeParams?: string;
+  removeLikeParams?: string;
+}
+
+export interface LikeEndpointTarget {
+  videoId: string;
+}
+
+export interface LikeStatusEntity {
+  key: string;
+  likeStatus: string;
+}
+
+export interface LikeCountEntity {
+  key: string;
+  likeCountIfLiked: LikeCountEntityContent;
+  likeCountIfDisliked: LikeCountEntityContent;
+  likeCountIfIndifferent: LikeCountEntityContent;
+  expandedLikeCountIfLiked: LikeCountEntityContent;
+  expandedLikeCountIfDisliked: LikeCountEntityContent;
+  expandedLikeCountIfIndifferent: LikeCountEntityContent;
+  likeCountLabel: LikeCountEntityContent;
+  likeButtonA11yText: LikeCountEntityContent;
+  likeCountIfLikedNumber: string;
+  likeCountIfDislikedNumber: string;
+  likeCountIfIndifferentNumber: string;
+  shouldExpandLikeCount: boolean;
+  sentimentFactoidA11yTextIfLiked: LikeCountEntityContent;
+  sentimentFactoidA11yTextIfDisliked: LikeCountEntityContent;
+}
+
+export interface LikeCountEntityContent {
+  content: string;
+}
+
+export interface DynamicLikeCountUpdateData {
+  updateStatusKey: string;
+  placeholderLikeCountValuesKey: string;
+  updateDelayLoopId: string;
+  updateDelaySec: number;
 }
 
 export interface SegmentedLikeDislikeButtonRenderer {

@@ -146,12 +146,17 @@ export function parseMetadataFromWatch(html: string): {
           .replace(/[^\d]+/g, "")
       )
     : 0;
-  const likes = primaryInfo.videoActions.menuRenderer.topLevelButtons
-    .find((b) => "segmentedLikeDislikeButtonRenderer" in b)
-    ?.segmentedLikeDislikeButtonRenderer?.likeButton.toggleButtonRenderer?.defaultText.accessibility?.accessibilityData.label.replace(
-      /[^\d]+/g,
-      ""
-    );
+  const likes =
+    primaryInfo.videoActions.menuRenderer.topLevelButtons
+      .find((b) => "segmentedLikeDislikeButtonRenderer" in b)
+      ?.segmentedLikeDislikeButtonRenderer?.likeButton.toggleButtonRenderer?.defaultText.accessibility?.accessibilityData.label.replace(
+        /[^\d]+/g,
+        ""
+      ) ??
+    primaryInfo.videoActions.menuRenderer.topLevelButtons.find(
+      (b) => "segmentedLikeDislikeButtonViewModel" in b
+    )?.segmentedLikeDislikeButtonViewModel?.likeCountEntity
+      .likeCountIfIndifferentNumber;
   const subscribers = unitsToNumber(
     stringify(videoOwner.subscriberCountText).replace("subscribers", "").trim()
   );
