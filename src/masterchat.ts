@@ -136,7 +136,7 @@ export interface MasterchatOptions {
    */
   mode?: "live" | "replay";
 
-  axiosInstance?: AxiosInstance;
+  axiosInstance?: any;
 }
 
 export class Masterchat extends EventEmitter {

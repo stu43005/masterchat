@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.4.0
+
+- Fix SuperChat color mapping.
+- Fix the missing badge information.
+  - `AddSuperChatItemAction`
+  - `AddSuperStickerItemAction`
+  - `AddMembershipItemAction`
+  - `AddMembershipMilestoneItemAction`
+  - `MembershipGiftPurchaseAction`
+- Add `color` and `significance` to `AddSuperStickerItemAction`.
+- BREAKING: `MembershipGiftPurchaseAction.membership` now becomes optional.
+- BREAKING: Remove action `ShowPanelAction` (changed to `unknown`).
+
 ## v1.3.0
 
 - Add `signal` param to `iterate` method

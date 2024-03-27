@@ -1,10 +1,10 @@
 import {
-  YTAccessibilityLabel,
+  FrameworkUpdates,
   YTAccessibilityData,
+  YTAccessibilityLabel,
+  YTBrowseEndpointContainer,
   YTReloadContinuation,
   YTResponseContext,
-  YTBrowseEndpointContainer,
-  FrameworkUpdates,
 } from "./context";
 
 // --------------------
@@ -417,6 +417,7 @@ export interface YTLiveChatPaidMessageRenderer {
   authorExternalChannelId: string;
   contextMenuEndpoint: YTLiveChatItemContextMenuEndpointContainer;
   contextMenuAccessibility: YTAccessibilityData;
+  authorBadges?: YTAuthorBadge[];
 
   purchaseAmountText: YTSimpleTextContainer;
   timestampColor: number;
@@ -425,6 +426,7 @@ export interface YTLiveChatPaidMessageRenderer {
   headerTextColor: number;
   bodyBackgroundColor: number;
   bodyTextColor: number;
+  textInputBackgroundColor: number;
   trackingParams: string;
 }
 
@@ -437,6 +439,7 @@ export interface YTLiveChatPaidStickerRenderer {
   authorName: YTText;
   authorExternalChannelId: string;
   sticker: YTThumbnailList; // with accessibility
+  authorBadges?: YTAuthorBadge[];
   moneyChipBackgroundColor: number;
   moneyChipTextColor: number;
   purchaseAmountText: YTSimpleTextContainer;

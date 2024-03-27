@@ -1,11 +1,7 @@
+import { Badges, Color, SuperChat } from "./misc";
 import {
-  Color,
-  Membership,
-  SuperChat,
-  SuperChatColor,
-  SuperChatSignificance,
-} from "./misc";
-import {
+  YTLiveChatPaidMessageRenderer,
+  YTLiveChatPaidStickerRenderer,
   YTLiveChatPollChoice,
   YTLiveChatPollType,
   YTRun,
@@ -36,7 +32,6 @@ export type Action =
   | AddOutgoingRaidBannerAction
   | AddProductBannerAction
   | AddViewerEngagementMessageAction
-  | ShowPanelAction
   | ShowPollPanelAction
   | ClosePanelAction
   | UpdatePollAction
@@ -51,7 +46,7 @@ export type Action =
   | UnknownAction
   | ParserError;
 
-export interface AddChatItemAction {
+export interface AddChatItemAction extends Badges {
   type: "addChatItemAction";
   id: string;
   timestamp: Date;
@@ -66,17 +61,15 @@ export interface AddChatItemAction {
   authorName?: string;
   authorChannelId: string;
   authorPhoto: string;
-  membership?: Membership;
-  isOwner: boolean;
-  isModerator: boolean;
-  isVerified: boolean;
   contextMenuEndpointParams: string;
 
   /** @deprecated use `message` */
   rawMessage?: YTRun[];
 }
 
-export interface AddSuperChatItemAction {
+export interface AddSuperChatItemAction
+  extends SuperChat<YTLiveChatPaidMessageRenderer>,
+    Badges {
   type: "addSuperChatItemAction";
   id: string;
   timestamp: Date;
@@ -86,25 +79,17 @@ export interface AddSuperChatItemAction {
   authorChannelId: string;
   authorPhoto: string;
   message: YTRun[] | null;
-  amount: number;
-  currency: string;
-  color: SuperChatColor;
-  significance: SuperChatSignificance;
-  authorNameTextColor: Color;
-  timestampColor: Color;
-  headerBackgroundColor: Color;
-  headerTextColor: Color;
-  bodyBackgroundColor: Color;
-  bodyTextColor: Color;
 
   /** @deprecated use `message` */
   rawMessage: YTRun[] | undefined;
 
   /** @deprecated flattened */
-  superchat: SuperChat;
+  superchat: SuperChat<YTLiveChatPaidMessageRenderer>;
 }
 
-export interface AddSuperStickerItemAction {
+export interface AddSuperStickerItemAction
+  extends SuperChat<YTLiveChatPaidStickerRenderer>,
+    Badges {
   type: "addSuperStickerItemAction";
   id: string;
   timestamp: Date;
@@ -114,17 +99,11 @@ export interface AddSuperStickerItemAction {
   authorPhoto: string;
   stickerUrl: string;
   stickerText: string;
-  amount: number;
-  currency: string;
   stickerDisplayWidth: number;
   stickerDisplayHeight: number;
-  moneyChipBackgroundColor: Color;
-  moneyChipTextColor: Color;
-  backgroundColor: Color;
-  authorNameTextColor: Color;
 }
 
-export interface AddMembershipItemAction {
+export interface AddMembershipItemAction extends Badges {
   type: "addMembershipItemAction";
   id: string;
   timestamp: Date;
@@ -133,16 +112,13 @@ export interface AddMembershipItemAction {
   // `level` is only shown when there's multiple levels available
   level?: string;
 
-  /** Sometimes customThumbnail is not available */
-  membership?: Membership;
-
   /** rare but can be undefined */
   authorName?: string;
   authorChannelId: string;
   authorPhoto: string;
 }
 
-export interface AddMembershipMilestoneItemAction {
+export interface AddMembershipMilestoneItemAction extends Badges {
   type: "addMembershipMilestoneItemAction";
   id: string;
   timestamp: Date;
@@ -150,9 +126,6 @@ export interface AddMembershipMilestoneItemAction {
 
   /** `level` is only shown when there's multiple levels available */
   level?: string;
-
-  /** Sometimes customThumbnail is not available */
-  membership?: Membership;
 
   authorName?: string;
   authorChannelId: string;
@@ -252,7 +225,7 @@ export interface AddMembershipTickerAction {
   endBackgroundColor: Color;
 }
 
-export interface AddBannerAction {
+export interface AddBannerAction extends Badges {
   type: "addBannerAction";
   actionId: string;
   targetId: string;
@@ -264,10 +237,6 @@ export interface AddBannerAction {
   authorName: string;
   authorChannelId: string;
   authorPhoto: string;
-  membership?: Membership;
-  isOwner: boolean;
-  isModerator: boolean;
-  isVerified: boolean;
   viewerIsCreator: boolean;
   contextMenuEndpointParams?: string;
 }
@@ -332,12 +301,6 @@ export interface AddViewerEngagementMessageAction {
   timestampUsec: string;
 }
 
-// generic action for unknown panel type
-export interface ShowPanelAction {
-  type: "showPanelAction";
-  panelToShow: any;
-}
-
 export interface ClosePanelAction {
   type: "closePanelAction";
   targetPanelId: string;
@@ -394,14 +357,13 @@ export interface ModeChangeAction {
   description: string;
 }
 
-export interface MembershipGiftPurchaseAction {
+export interface MembershipGiftPurchaseAction extends Badges {
   type: "membershipGiftPurchaseAction";
   id: string;
   timestamp: Date;
   timestampUsec: string;
   channelName: string; // MEMO: is it limited for ¥500 membership?
   amount: number; // 5, 10, 20
-  membership: Membership;
   authorName: string;
   authorChannelId: string;
   authorPhoto: string;

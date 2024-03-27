@@ -44,7 +44,7 @@ export function parseAddBannerToLiveChatCommand(
     const authorName = stringify(rdr.authorName);
     const authorPhoto = pickThumbUrl(rdr.authorPhoto);
     const authorChannelId = rdr.authorExternalChannelId;
-    const { isVerified, isOwner, isModerator, membership } = parseBadges(rdr);
+    const badges = parseBadges(rdr);
 
     // header
     const header = bannerRdr.header!.liveChatBannerHeaderRenderer;
@@ -69,10 +69,7 @@ export function parseAddBannerToLiveChatCommand(
       authorName,
       authorPhoto,
       authorChannelId,
-      isVerified,
-      isOwner,
-      isModerator,
-      membership,
+      ...badges,
       viewerIsCreator,
       contextMenuEndpointParams:
         rdr.contextMenuEndpoint?.liveChatItemContextMenuEndpoint.params,
