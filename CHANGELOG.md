@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.2
+
+- Fix `parseMetadataFromWatch` likes count
+
 ## v1.4.1
 
 - Fix the missing badge information.
