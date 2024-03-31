@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.3
+
+- Using `stringify` to convert the poll questions into string
+- Format of `addPollResultAction` will be consistent with `updatePollAction`
+- Improve type checking
+
 ## v1.4.2
 
 - Fix `parseMetadataFromWatch` likes count
