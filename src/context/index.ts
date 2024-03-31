@@ -156,7 +156,13 @@ export function parseMetadataFromWatch(html: string): {
     primaryInfo.videoActions.menuRenderer.topLevelButtons.find(
       (b) => "segmentedLikeDislikeButtonViewModel" in b
     )?.segmentedLikeDislikeButtonViewModel?.likeCountEntity
-      .likeCountIfIndifferentNumber;
+      .likeCountIfIndifferentNumber ??
+    primaryInfo.videoActions.menuRenderer.topLevelButtons
+      .find((b) => "segmentedLikeDislikeButtonViewModel" in b)
+      ?.segmentedLikeDislikeButtonViewModel?.likeButtonViewModel.likeButtonViewModel.toggleButtonViewModel.toggleButtonViewModel.defaultButtonViewModel.buttonViewModel.accessibilityText.replace(
+        /[^\d]+/g,
+        ""
+      );
   const subscribers = unitsToNumber(
     stringify(videoOwner.subscriberCountText).replace("subscribers", "").trim()
   );
@@ -167,7 +173,7 @@ export function parseMetadataFromWatch(html: string): {
     channelName,
     isLive,
     viewCount,
-    likes: likes ? Number(likes) : 0,
+    likes: likes ? unitsToNumber(likes) : 0,
     subscribers,
   };
 }

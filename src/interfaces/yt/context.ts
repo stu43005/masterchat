@@ -580,20 +580,20 @@ export interface LikeStatusEntity {
 
 export interface LikeCountEntity {
   key: string;
-  likeCountIfLiked: LikeCountEntityContent;
-  likeCountIfDisliked: LikeCountEntityContent;
-  likeCountIfIndifferent: LikeCountEntityContent;
-  expandedLikeCountIfLiked: LikeCountEntityContent;
-  expandedLikeCountIfDisliked: LikeCountEntityContent;
-  expandedLikeCountIfIndifferent: LikeCountEntityContent;
-  likeCountLabel: LikeCountEntityContent;
-  likeButtonA11yText: LikeCountEntityContent;
-  likeCountIfLikedNumber: string;
-  likeCountIfDislikedNumber: string;
-  likeCountIfIndifferentNumber: string;
-  shouldExpandLikeCount: boolean;
-  sentimentFactoidA11yTextIfLiked: LikeCountEntityContent;
-  sentimentFactoidA11yTextIfDisliked: LikeCountEntityContent;
+  likeCountIfLiked?: LikeCountEntityContent;
+  likeCountIfDisliked?: LikeCountEntityContent;
+  likeCountIfIndifferent?: LikeCountEntityContent;
+  expandedLikeCountIfLiked?: LikeCountEntityContent;
+  expandedLikeCountIfDisliked?: LikeCountEntityContent;
+  expandedLikeCountIfIndifferent?: LikeCountEntityContent;
+  likeCountLabel?: LikeCountEntityContent;
+  likeButtonA11yText?: LikeCountEntityContent;
+  likeCountIfLikedNumber?: string;
+  likeCountIfDislikedNumber?: string;
+  likeCountIfIndifferentNumber?: string;
+  shouldExpandLikeCount?: boolean;
+  sentimentFactoidA11yTextIfLiked?: LikeCountEntityContent;
+  sentimentFactoidA11yTextIfDisliked?: LikeCountEntityContent;
 }
 
 export interface LikeCountEntityContent {
