@@ -334,12 +334,15 @@ export interface AddPollResultAction {
   type: "addPollResultAction";
   id: string;
   question?: YTRun[];
+  /** @deprecated use `voteCount` */
   total: string;
+  voteCount: number;
   choices: PollChoice[];
 }
 
 export interface PollChoice {
   text: YTRun[];
+  voteRatio: number;
   votePercentage: string;
 }
 

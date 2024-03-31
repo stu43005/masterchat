@@ -40,7 +40,7 @@ import {
 } from "../../utils";
 import { parseBadges } from "../badge";
 import { parseSuperChat } from "../superchat";
-import { pickThumbUrl } from "../utils";
+import { pickThumbUrl, unitsToNumber } from "../utils";
 
 export function parseAddChatItemAction(payload: YTAddChatItemAction) {
   const { item } = payload;
@@ -372,14 +372,19 @@ export function parseLiveChatViewerEngagementMessageRenderer(
         } else {
           text.pop();
         }
-        return { text, votePercentage };
+        return {
+          text,
+          voteRatio: parseFloat(votePercentage) / 100,
+          votePercentage,
+        };
       });
 
       const parsed: AddPollResultAction = {
         type: "addPollResultAction",
         id,
         question,
-        total,
+        total, // deprecated
+        voteCount: unitsToNumber(total),
         choices,
       };
       return parsed;
