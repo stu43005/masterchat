@@ -375,7 +375,7 @@ export interface MembershipGiftPurchaseAction extends Badges {
 
 export type MembershipGiftPurchaseTickerContent = Omit<
   MembershipGiftPurchaseAction,
-  "timestamp" | "timestampUsec" | "type"
+  "timestamp" | "timestampUsec"
 >;
 
 export interface MembershipGiftRedemptionAction extends Badges {

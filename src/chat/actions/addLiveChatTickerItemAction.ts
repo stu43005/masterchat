@@ -152,7 +152,7 @@ function parseLiveChatTickerSponsorItemRenderer(
    */
   // const iconType = renderer.detailIcon?.iconType;
   const rdr = renderer.showItemEndpoint.showLiveChatItemEndpoint.renderer;
-  let contents;
+  let contents: AddMembershipTickerAction["contents"];
   if ("liveChatMembershipItemRenderer" in rdr) {
     contents = parseLiveChatMembershipItemRenderer(
       rdr.liveChatMembershipItemRenderer

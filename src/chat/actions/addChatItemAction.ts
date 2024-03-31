@@ -473,6 +473,7 @@ export function parseLiveChatSponsorshipsGiftPurchaseAnnouncementRenderer(
 
   if (!timestampUsec || !timestamp) {
     const tickerContent: MembershipGiftPurchaseTickerContent = {
+      type: "membershipGiftPurchaseAction",
       id,
       channelName,
       amount,
