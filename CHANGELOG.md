@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.4
+
+- Fix `parseMetadataFromWatch` likes count
+
 ## v1.4.3
 
 - Using `stringify` to convert the poll questions into string
