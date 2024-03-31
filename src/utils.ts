@@ -181,9 +181,9 @@ export function stringify(
   runsToStringOptions?: RunsToStringOptions
 ): string;
 export function stringify(
-  payload: undefined,
+  payload: YTText | YTRun[] | string | undefined,
   runsToStringOptions?: RunsToStringOptions
-): undefined;
+): string | undefined;
 export function stringify(
   payload: YTText | YTRun[] | string | undefined,
   runsToStringOptions?: RunsToStringOptions

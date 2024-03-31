@@ -1,5 +1,6 @@
 import { UpdatePollAction } from "../../interfaces/actions";
 import { YTUpdateLiveChatPollAction } from "../../interfaces/yt/chat";
+import { debugLog, stringify } from "../../utils";
 import { pickThumbUrl } from "../utils";
 
 export function parseUpdateLiveChatPollAction(
@@ -20,12 +21,17 @@ export function parseUpdateLiveChatPollAction(
   const elapsedText = meta[2].text;
   const voteCount = parseInt(meta[4].text.replace(/,/g, ""), 10);
 
+  const question = stringify(header.pollQuestion);
+  if (!question) {
+    debugLog("[action required] empty question (poll)", JSON.stringify(rdr));
+  }
+
   const parsed: UpdatePollAction = {
     type: "updatePollAction",
     id: rdr.liveChatPollId,
     authorName,
     authorPhoto: pickThumbUrl(header.thumbnail),
-    question: header.pollQuestion?.simpleText,
+    question,
     choices: rdr.choices,
     elapsedText,
     voteCount,

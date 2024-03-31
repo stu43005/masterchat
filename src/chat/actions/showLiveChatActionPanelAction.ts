@@ -4,7 +4,7 @@ import {
   YTLiveChatPollRenderer,
   YTShowLiveChatActionPanelAction,
 } from "../../interfaces/yt/chat";
-import { debugLog } from "../../utils";
+import { debugLog, stringify } from "../../utils";
 import { pickThumbUrl } from "../utils";
 
 export function parseShowLiveChatActionPanelAction(
@@ -14,17 +14,23 @@ export function parseShowLiveChatActionPanelAction(
 
   if ("pollRenderer" in panelRdr.contents) {
     const rdr = panelRdr.contents.pollRenderer as YTLiveChatPollRenderer;
-    const authorName = rdr.header.pollHeaderRenderer.metadataText.runs[0].text;
+    const header = rdr.header.pollHeaderRenderer;
+    const authorName = header.metadataText.runs[0].text;
+
+    const question = stringify(header.pollQuestion);
+    if (!question) {
+      debugLog("[action required] empty question (poll)", JSON.stringify(rdr));
+    }
 
     const parsed: ShowPollPanelAction = {
       type: "showPollPanelAction",
       targetId: panelRdr.targetId,
       id: panelRdr.id,
-      choices: rdr.choices,
-      question: rdr.header.pollHeaderRenderer.pollQuestion?.simpleText,
       authorName,
-      authorPhoto: pickThumbUrl(rdr.header.pollHeaderRenderer.thumbnail),
-      pollType: rdr.header.pollHeaderRenderer.liveChatPollType,
+      authorPhoto: pickThumbUrl(header.thumbnail),
+      question,
+      choices: rdr.choices,
+      pollType: header.liveChatPollType,
     };
 
     return parsed;
