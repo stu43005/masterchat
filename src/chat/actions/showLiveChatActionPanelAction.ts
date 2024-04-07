@@ -17,7 +17,9 @@ export function parseShowLiveChatActionPanelAction(
     const header = rdr.header.pollHeaderRenderer;
     const authorName = header.metadataText.runs[0].text;
 
-    const question = stringify(header.pollQuestion);
+    const question = header.pollQuestion
+      ? stringify(header.pollQuestion)
+      : undefined;
     if (!question) {
       debugLog("[action required] empty question (poll)", JSON.stringify(rdr));
     }
