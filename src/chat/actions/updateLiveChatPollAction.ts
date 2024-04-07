@@ -21,7 +21,9 @@ export function parseUpdateLiveChatPollAction(
   const elapsedText = meta[2].text;
   const voteCount = parseInt(meta[4].text.replace(/,/g, ""), 10);
 
-  const question = stringify(header.pollQuestion);
+  const question = header.pollQuestion
+    ? stringify(header.pollQuestion)
+    : undefined;
   if (!question) {
     debugLog("[action required] empty question (poll)", JSON.stringify(rdr));
   }

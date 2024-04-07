@@ -121,12 +121,12 @@ export function parseMetadataFromWatch(html: string): {
 
   // TODO: initialData.contents.twoColumnWatchNextResults.conversationBar.conversationBarRenderer.availabilityMessage.messageRenderer.text.runs[0].text === 'Chat is disabled for this live stream.'
   const results =
-    initialData.contents?.twoColumnWatchNextResults?.results.results!;
+    initialData.contents?.twoColumnWatchNextResults?.results.results;
 
-  const primaryInfo = results.contents?.find(
+  const primaryInfo = results?.contents?.find(
     (b) => "videoPrimaryInfoRenderer" in b
   )?.videoPrimaryInfoRenderer;
-  const videoOwner = results.contents?.find(
+  const videoOwner = results?.contents?.find(
     (b) => "videoSecondaryInfoRenderer" in b
   )?.videoSecondaryInfoRenderer.owner.videoOwnerRenderer;
 

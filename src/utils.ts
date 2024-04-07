@@ -189,7 +189,7 @@ export function stringify(
   runsToStringOptions?: RunsToStringOptions
 ): string | undefined {
   // undefined
-  if (payload == undefined) return undefined;
+  if (typeof payload === "undefined" || payload === null) return undefined;
 
   // string
   if (typeof payload === "string") return payload;
@@ -204,7 +204,7 @@ export function stringify(
   // TODO: add option for expanding accessibility label
   if ("simpleText" in payload) return simpleTextToString(payload, false);
 
-  throw new Error(`Invalid payload format: ${payload}`);
+  throw new Error(`Invalid payload format: ${JSON.stringify(payload)}`);
 }
 
 export function simpleTextToString(
