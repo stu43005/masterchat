@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.5
+
+- Fix some bugs
+
 ## v1.4.4
 
 - Fix `parseMetadataFromWatch` likes count
