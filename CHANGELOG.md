@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.7
+
+- `stringify` returns undefined for invalid payloads
+
 ## v1.4.6
 
 - Fix some bugs
