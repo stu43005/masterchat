@@ -204,7 +204,8 @@ export function stringify(
   // TODO: add option for expanding accessibility label
   if ("simpleText" in payload) return simpleTextToString(payload, false);
 
-  throw new Error(`Invalid payload format: ${JSON.stringify(payload)}`);
+  debugLog(`[stringify] Invalid payload format: ${JSON.stringify(payload)}`);
+  return undefined;
 }
 
 export function simpleTextToString(
