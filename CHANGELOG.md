@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.5.0
+
+- New action `AddCallForQuestionsBannerAction`
+- New action `AddChatSummaryBannerAction`
+
 ## v1.4.7
 
 - `stringify` returns undefined for invalid payloads
