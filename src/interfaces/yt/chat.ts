@@ -28,10 +28,16 @@ export interface YTTextRun {
   text: string;
   bold?: boolean;
   italics?: boolean;
+  fontFace?: YTFontFace | string;
   navigationEndpoint?:
     | YTUrlEndpointContainer
     | YTBrowseEndpointContainer
     | YTWatchEndpointContainer;
+}
+
+export enum YTFontFace {
+  RobotoRegular = "FONT_FACE_ROBOTO_REGULAR",
+  RobotoMedium = "FONT_FACE_ROBOTO_MEDIUM",
 }
 
 export interface YTEmojiRun {
@@ -391,6 +397,14 @@ export interface YTLiveChatProductItemRendererContainer {
   liveChatProductItemRenderer: YTLiveChatProductItemRenderer;
 }
 
+export interface YTLiveChatCallForQuestionsRendererContainer {
+  liveChatCallForQuestionsRenderer: YTLiveChatCallForQuestionsRenderer;
+}
+
+export interface YTLiveChatBannerChatSummaryRendererContainer {
+  liveChatBannerChatSummaryRenderer: YTLiveChatBannerChatSummaryRenderer;
+}
+
 // LiveChat Renderers
 
 export interface YTLiveChatTextMessageRenderer {
@@ -487,11 +501,33 @@ export interface YTLiveChatBannerRenderer {
   contents:
     | YTLiveChatTextMessageRendererContainer
     | YTLiveChatBannerRedirectRendererContainer
-    | YTLiveChatProductItemRendererContainer;
+    | YTLiveChatProductItemRendererContainer
+    | YTLiveChatCallForQuestionsRendererContainer
+    | YTLiveChatBannerChatSummaryRendererContainer;
   viewerIsCreator: boolean;
   header?: YTLiveChatBannerRendererHeader;
   isStackable?: boolean;
   backgroundType?: "LIVE_CHAT_BANNER_BACKGROUND_TYPE_STATIC" | string;
+  bannerType?: YTLiveChatBannerType | string;
+  onCollapseCommand?: YTElementsCommandContainer;
+  onExpandCommand?: YTElementsCommandContainer;
+}
+
+export enum YTLiveChatBannerType {
+  ChatSummary = "LIVE_CHAT_BANNER_TYPE_CHAT_SUMMARY",
+  CallForQuestions = "LIVE_CHAT_BANNER_TYPE_QNA_START",
+}
+
+export interface YTElementsCommandContainer {
+  clickTrackingParams: string;
+  elementsCommand: YTSetEntityCommandContainer;
+}
+
+export interface YTSetEntityCommandContainer {
+  setEntityCommand: {
+    identifier: string;
+    entity: string;
+  };
 }
 
 export interface YTLiveChatViewerEngagementMessageRenderer {
@@ -598,6 +634,22 @@ export interface LiveChatDialogRenderer {
   trackingParams: string;
   dialogMessages: YTSimpleTextContainer[];
   confirmButton: CollapseButton;
+}
+
+export interface YTLiveChatCallForQuestionsRenderer {
+  creatorAvatar: YTThumbnailList;
+  featureLabel: YTSimpleTextContainer;
+  contentSeparator: YTSimpleTextContainer;
+  overflowMenuButton: YTContextMenuButtonRendererContainer;
+  creatorAuthorName: YTSimpleTextContainer;
+  questionMessage: YTRunContainer;
+}
+
+export interface YTLiveChatBannerChatSummaryRenderer {
+  liveChatSummaryId: string;
+  chatSummary: YTRunContainer;
+  icon: YTIcon;
+  trackingParams: string;
 }
 
 export interface YTLiveChatPollChoice {
@@ -917,6 +969,7 @@ export enum YTIconType {
   TabSubscriptions = "TAB_SUBSCRIPTIONS",
   BlockUser = "BLOCK_USER",
   ErrorOutline = "ERROR_OUTLINE",
+  Spark = "SPARK",
 }
 
 export interface YTPicker {
@@ -995,6 +1048,7 @@ export interface YTContextMenuButtonRendererContainer<
     icon: YTIcon;
     style?: string;
     command: Command;
+    accessibility?: YTAccessibilityLabel;
     accessibilityData: YTAccessibilityData;
     trackingParams: string;
   };

@@ -31,6 +31,8 @@ export type Action =
   | AddIncomingRaidBannerAction
   | AddOutgoingRaidBannerAction
   | AddProductBannerAction
+  | AddCallForQuestionsBannerAction
+  | AddChatSummaryBannerAction
   | AddViewerEngagementMessageAction
   | ShowPollPanelAction
   | ClosePanelAction
@@ -280,6 +282,29 @@ export interface AddProductBannerAction {
   url: string;
   dialogMessage: YTSimpleTextContainer[];
   isVerified: boolean;
+}
+
+export interface AddCallForQuestionsBannerAction {
+  type: "addCallForQuestionsBannerAction";
+  actionId: string;
+  targetId: string;
+  isStackable?: boolean;
+  bannerType?: string;
+  creatorAvatar: string;
+  creatorAuthorName: string;
+  questionMessage: YTRun[];
+}
+
+export interface AddChatSummaryBannerAction {
+  type: "addChatSummaryBannerAction";
+  id: string;
+  actionId: string;
+  targetId: string;
+  isStackable?: boolean;
+  bannerType?: string;
+  timestamp: Date;
+  timestampUsec: string;
+  chatSummary: YTRun[];
 }
 
 export interface ShowTooltipAction {
